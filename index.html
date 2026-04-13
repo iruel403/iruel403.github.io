@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRUEL403 // SYSTEM TERMINAL</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Space Mono (Tech) & Cinzel (Magic) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --eva-red: #d91c1c;
+            --eva-orange: #ff6b00;
+            --eva-green: #00ff41;
+            --eva-bg: #050505;
+        }
+        
+        body {
+            background-color: var(--eva-bg);
+            color: #a0a0a0;
+            font-family: 'Space Mono', monospace;
+            /* Subtle CRT scanline effect */
+            background-image: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+        }
+
+        .font-magic {
+            font-family: 'Cinzel', serif;
+        }
+
+        /* Glowing borders */
+        .glow-border-red {
+            box-shadow: 0 0 10px rgba(217, 28, 28, 0.2), inset 0 0 10px rgba(217, 28, 28, 0.1);
+        }
+        
+        .glow-border-orange {
+            box-shadow: 0 0 10px rgba(255, 107, 0, 0.1);
+        }
+
+        /* Evangelion UI Elements */
+        .hazard-stripe {
+            background: repeating-linear-gradient(
+                -45deg,
+                #000,
+                #000 10px,
+                var(--eva-orange) 10px,
+                var(--eva-orange) 20px
+            );
+        }
+        
+        .clip-corner {
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--eva-bg); border-left: 1px solid #333; }
+        ::-webkit-scrollbar-thumb { background: #333; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--eva-orange); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8">
+
+    <!-- Main Terminal Container -->
+    <div class="w-full max-w-4xl border-4 border-orange-600/80 bg-black relative shadow-[0_0_30px_rgba(255,107,0,0.15)] clip-corner">
+        
+        <!-- Header Bar -->
+        <header class="border-b-4 border-orange-600/80 p-2 flex justify-between items-center text-xs tracking-widest text-orange-500 font-bold select-none bg-orange-950/20 uppercase">
+            <span class="flex items-center gap-2"><div class="w-2 h-2 bg-orange-500 animate-ping"></div> SYS.OP // IRUEL403</span>
+            <span class="text-orange-500 animate-pulse">CONNECTION: STABLE</span>
+        </header>
+
+        <div class="p-6 sm:p-10">
+            
+            <!-- Profile Section -->
+            <div class="flex flex-col md:flex-row gap-8 items-start mb-12">
+                
+                <!-- About Me (NERV UI Style) -->
+                <div class="flex-grow w-full border-l-4 border-orange-500 pl-6 relative">
+                    <div class="absolute -left-1 top-0 w-2 h-8 bg-orange-500"></div>
+                    <div class="flex items-center gap-4 mb-2">
+                        <h1 class="text-4xl sm:text-5xl font-black text-orange-500 tracking-tighter uppercase">iruel403</h1>
+                        <span class="bg-orange-500 text-black text-xs font-bold px-2 py-1 tracking-widest">SYS.OP</span>
+                    </div>
+                    <p class="text-gray-500 mb-4 text-sm font-bold tracking-widest uppercase">> he/him</p>
+                    <div class="border border-orange-900/50 p-4 bg-orange-950/10 clip-corner relative">
+                        <div class="absolute top-0 right-0 w-8 h-1 bg-orange-500/50"></div>
+                        <p class="text-sm text-gray-300 leading-relaxed uppercase tracking-wide">
+                            Fan of low-level stuff. <br>
+                            Bridging the gap between the arcane and the algorithmic.
+                        </p>
+                    </div>
+                    <div class="mt-4 flex gap-4 text-sm font-bold tracking-widest uppercase">
+                        <a href="mailto:iruel403@proton.me" class="text-orange-500 hover:text-black hover:bg-orange-500 transition-colors bg-orange-950/30 px-3 py-1 border border-orange-900">[ Contact ]</a>
+                        <a href="https://github.com/iruel403" class="text-gray-400 hover:text-white hover:border-gray-500 transition-colors bg-black px-3 py-1 border border-gray-800">[ GitHub ]</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Divider -->
+            <div class="w-full h-2 hazard-stripe mb-8 relative">
+                <span class="absolute -top-6 left-0 text-xs text-orange-500 font-bold tracking-widest">SYSTEM.DIRECTORIES //</span>
+            </div>
+
+            <!-- PROJECTS SECTION -->
+            <div class="space-y-6">
+
+                <!-- 1. DOXASTRA (The Hub - Dropdown) -->
+                <div class="border-2 border-red-800 bg-red-950/10 transition-all duration-300 hover:border-red-600 clip-corner" id="doxastra-container">
+                    
+                    <!-- Accordion Button -->
+                    <button onclick="toggleDoxastra()" class="w-full flex justify-between items-center p-4 focus:outline-none group hover:bg-red-900/20 transition-colors">
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-left">
+                            <span class="text-red-500 text-2xl font-bold font-magic tracking-widest group-hover:text-red-400 transition-colors">DOXASTRA</span>
+                            <span class="text-[10px] sm:text-xs bg-red-800 text-black px-2 py-1 font-bold tracking-widest uppercase inline-block w-max">WORLD-BUILDING PROJECT</span>
+                        </div>
+                        <span id="dox-toggle-icon" class="text-red-500 font-bold text-xl transition-transform duration-300">[ + ]</span>
+                    </button>
+
+                    <!-- Accordion Content (Hidden by default) -->
+                    <div id="doxastra-content" class="hidden px-4 pb-4 border-t-2 border-red-900/50 pt-4 relative">
+                        <div class="absolute top-0 left-0 w-12 h-1 bg-red-600"></div>
+                        <p class="text-gray-400 text-sm mb-5 font-magic italic border-l-2 border-red-600 pl-3">
+                            "What would be if magic was real, and how would it affect the world?"
+                        </p>
+                        
+                        <!-- Nested Projects Grid -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            
+                            <!-- Main Site -->
+                            <a href="#" class="block p-4 border border-red-900/40 bg-black hover:bg-red-900/30 hover:border-red-500 transition-all glow-border-red group clip-corner">
+                                <h3 class="font-magic text-xl text-red-400 group-hover:text-red-300 mb-1">The Codex</h3>
+                                <p class="text-xs text-red-600/70 mb-3 font-bold tracking-wider uppercase">> DOXASTRA_MAIN</p>
+                                <p class="text-xs text-gray-400 leading-relaxed uppercase">
+                                    The primary database containing the theoretical framework, history, and physical laws of applied thaumaturgy.
+                                </p>
+                            </a>
+
+                            <!-- Magic Circle Generator -->
+                            <a href="#" class="block p-4 border border-orange-900/40 bg-black hover:bg-orange-900/30 hover:border-orange-500 transition-all glow-border-orange group clip-corner">
+                                <h3 class="font-magic text-xl text-orange-400 group-hover:text-orange-300 mb-1">Thaumaturgic Engine</h3>
+                                <p class="text-xs text-orange-600/70 mb-3 font-bold tracking-wider uppercase">> GENERATOR_TOOL</p>
+                                <p class="text-xs text-gray-400 leading-relaxed uppercase">
+                                    A practical computational tool for generating, validating, and rendering functional geometric spell circles.
+                                </p>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. K-Envoy -->
+                <div class="border border-gray-800 border-l-4 border-l-green-600 bg-zinc-950/50 p-4 hover:border-gray-600 hover:border-l-green-400 transition-colors clip-corner relative">
+                    <div class="absolute top-0 right-0 w-8 h-1 bg-green-600/30"></div>
+                    <div class="flex justify-between items-start mb-2">
+                        <a href="#" class="text-lg text-gray-200 hover:text-white font-bold group flex items-center gap-2 uppercase tracking-wide">
+                            K-Envoy
+                            <span class="text-xs text-gray-600 group-hover:text-gray-400 transition-colors">↗</span>
+                        </a>
+                        <span class="text-xs text-green-500 border border-green-900 px-1 font-bold">C#</span>
+                    </div>
+                    <p class="text-sm text-gray-500 leading-relaxed">
+                        A professional Windows desktop utility for managing advanced system configurations and a streamlined game compatibility library.
+                    </p>
+                </div>
+
+                <!-- 3. InstaPing -->
+                <div class="border border-gray-800 border-l-4 border-l-blue-600 bg-zinc-950/50 p-4 hover:border-gray-600 hover:border-l-blue-400 transition-colors clip-corner relative">
+                    <div class="absolute top-0 right-0 w-8 h-1 bg-blue-600/30"></div>
+                    <div class="flex justify-between items-start mb-2">
+                        <a href="#" class="text-lg text-gray-200 hover:text-white font-bold group flex items-center gap-2 uppercase tracking-wide">
+                            InstaPing
+                            <span class="text-xs text-gray-600 group-hover:text-gray-400 transition-colors">↗</span>
+                        </a>
+                        <span class="text-xs text-blue-500 border border-blue-900 px-1 font-bold">Python</span>
+                    </div>
+                        <p class="text-sm text-gray-500 leading-relaxed">
+                        A Python-based Discord bot that periodically checks for the latest Instagram posts from a specific user via the RapidAPI Scraper and sends notifications.
+                    </p>
+                </div>
+
+            </div>
+            
+            <!-- Footer -->
+            <div class="mt-12 text-center text-xs text-orange-700/50 border-t-2 border-orange-900/30 pt-4 font-bold tracking-widest">
+                > END OF FILE // SYSTEM HALTED
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Logic for the Doxastra Dropdown -->
+    <script>
+        function toggleDoxastra() {
+            const content = document.getElementById('doxastra-content');
+            const icon = document.getElementById('dox-toggle-icon');
+            const container = document.getElementById('doxastra-container');
+            
+            if (content.classList.contains('hidden')) {
+                // Open
+                content.classList.remove('hidden');
+                icon.innerText = '[ - ]';
+                icon.classList.add('text-orange-500');
+                container.classList.add('glow-border-red');
+            } else {
+                // Close
+                content.classList.add('hidden');
+                icon.innerText = '[ + ]';
+                icon.classList.remove('text-orange-500');
+                container.classList.remove('glow-border-red');
+            }
+        }
+    </script>
+</body>
+</html>
